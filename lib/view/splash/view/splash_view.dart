@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:demorealcarpark/product/constants/color.dart';
-import 'package:demorealcarpark/view/map/view/map_view.dart';
+import 'package:demorealcarpark/view/login/view/login_view.dart';
+import 'package:demorealcarpark/view/userMap/view/user_map_view.dart';
 import 'package:flutter/material.dart';
 
 class SplashView extends StatefulWidget {
@@ -17,7 +17,7 @@ class _SplashViewState extends State<SplashView> {
     super.initState();
      Timer(const Duration(milliseconds: 4000), () {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const MapView()));
+          context, MaterialPageRoute(builder: (context) => const UserMapView()));
     });
   }
   @override

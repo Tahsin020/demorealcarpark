@@ -1,7 +1,6 @@
 
 import 'dart:io';
-
-import 'package:demorealcarpark/view/map/model/parking_areas_model.dart';
+import 'package:demorealcarpark/view/userMap/model/parking_areas_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
