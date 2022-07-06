@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:demorealcarpark/product/constants/color.dart';
-import 'package:demorealcarpark/view/login/view/login_view.dart';
 import 'package:demorealcarpark/view/userMap/view/user_map_view.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +11,7 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  final String _imagePath='assets/dataMedium.png';
   @override
   void initState() {
     super.initState();
@@ -31,7 +31,7 @@ class _SplashViewState extends State<SplashView> {
               begin: Alignment.topCenter),
         ),
         child: Center(
-          child: Image.asset("assets/dataMedium.png"),
+          child: Image.asset(_imagePath),
         ),
       ),
     );

@@ -7,6 +7,7 @@ import 'package:demorealcarpark/view/map/model/area_model.dart';
 import 'package:demorealcarpark/view/map/viewModel/area_service.dart';
 import 'package:demorealcarpark/view/mapItem/view/map_item_detail_user.dart';
 import 'package:demorealcarpark/view/menu/view/menu_view.dart';
+import 'package:demorealcarpark/view/notification/view/notification_view.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -39,7 +40,7 @@ class _UserMapViewState extends State<UserMapView> {
     listendb();
   }
 
-  listendb() {
+  void listendb() {
     _dbref.child("areas").onChildChanged.listen((event) {
       setState(() {
         _markers = [];
@@ -52,20 +53,7 @@ class _UserMapViewState extends State<UserMapView> {
     getCustomMarker();
     _areaItem = await areaService.fetchParkingAreasItemsAdvance();
     for (var area in _areaItem!) {
-      _markers.add(Marker(
-          markerId: MarkerId(area.id.toString()),
-          icon: customRedMarker,
-          infoWindow: InfoWindow(
-            title: area.description,
-          ),
-          position: LatLng(area.location!.lang!, area.location!.lung!),
-          onTap: () {
-            _selectedIndex = area.id!;
-            setState(() {
-              _pageController.animateToPage(area.id!,
-                  duration: const Duration(milliseconds: 100), curve: Curves.elasticOut);
-            });
-          }));
+      _markers.add(_markerWidget(area));
     }
     setState(() {});
   }
@@ -97,13 +85,47 @@ class _UserMapViewState extends State<UserMapView> {
                   );
                 },
               )),
-          MenuWidget(callback: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const MenuView(),));
-          }),
-          const NotificationWidget(),
+          Positioned(
+            left: 14,
+            top: 30,
+            child: MenuWidget(callback: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MenuView(),
+                  ));
+            }),
+          ),
+          Positioned(
+            right: 14,
+            top: 30,
+            child: NotificationWidget(
+              onPressed: () async {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NotificationView()));
+              },
+            ),
+          ),
           HeadTextTitleWidget(title: title),
         ],
       ),
     );
   }
+
+   Marker _markerWidget(AreaModel area) {
+    return Marker(
+        markerId: MarkerId(area.id.toString()),
+        icon: area.areaCount == area.filledAreaCount ? customRedMarker : customGreenMarker,
+        infoWindow: InfoWindow(
+          title: area.description,
+        ),
+        position: LatLng(area.location!.lang!, area.location!.lung!),
+        onTap: () {
+          _selectedIndex = area.id!;
+          setState(() {
+            _pageController.animateToPage(area.id!,
+                duration: const Duration(milliseconds: 100), curve: Curves.elasticOut);
+          });
+        });
+  }
+
 }

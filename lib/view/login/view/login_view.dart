@@ -23,15 +23,12 @@ class _LoginViewState extends State<LoginView> {
   @override
   void initState() {
     super.initState();
-    authService=AuthService();
+    authService = AuthService();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: const Drawer(
-          child: Icon(Icons.abc),
-        ),
         /*appBar: AppBar(
           backgroundColor: dataTurquosieColors,
           title: const Text("Kullanıcı Girişi"),
@@ -51,64 +48,66 @@ class _LoginViewState extends State<LoginView> {
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(),
           child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                HeaderContainer("Giriş Yap"),
-                const _SizedBox(),
-                Padding(
-                  padding: ProjectPadding.normalAllPadding,
-                  child: TextInputField(
-                      icon: Icons.email, hint: "Kullanıcı Adı", controller: _emailController, isPasswordType: false),
-                ),
-                Padding(
-                  padding: ProjectPadding.normalAllPadding,
-                  child: TextInputField(
-                      icon: Icons.vpn_key, hint: "Parola", controller: _passwordController, isPasswordType: true),
-                ),
-                 Padding(
-                padding:ProjectPadding.normalAllPadding,
-                child: Container(
-                  margin: ProjectMargin.normalAllMargin,
-                  alignment: Alignment.centerRight,
-                  child: const Text(
-                    "Parolanızı mı unuttunuz?",
-                  ),
-                ),
-              ),
-                Padding(
-                    padding: ProjectPadding.normalAllPadding,
-                    child: LoginButton(
-                      onCompleted: () async {
-                       if (_passwordController.text != null && _emailController.text !=null ) {
-                       authService.signIn(_emailController.text, _passwordController.text).then((value){
-                        return    Navigator.push(
+            child: Expanded(
+              child: Column(
+                children: <Widget>[
+                  HeaderContainer(
+                      title: "Giriş Yap",
+                      onPressed: () async {
+                        await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                const AdminMapView()));
-                      });
-                    }
-                      },
-                      title: "Giriş Yap",
-                    )),
-                     const _SizedBox(),
-              GestureDetector(
-                onTap:(){
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => const SplashView()));
-                },
-                child: RichText(
-                  text: TextSpan(children: [
-                    const TextSpan(
-                        text: "Hesabınız yok mu? ",
-                        style: TextStyle(color: Colors.black)),
-                    TextSpan(
-                        text: "Kayıt Ol",
-                        style: TextStyle(color: dataTurquosieColors)),
-                  ]),
-        
-                ),
-                )
-              ],
+                              builder: (context) => const UserMapView(),
+                            ));
+                      }),
+                  const _SizedBox(),
+                  Padding(
+                    padding: ProjectPadding.normalAllPadding,
+                    child: TextInputField(
+                        icon: Icons.email, hint: "Kullanıcı Adı", controller: _emailController, isPasswordType: false),
+                  ),
+                  Padding(
+                    padding: ProjectPadding.normalAllPadding,
+                    child: TextInputField(
+                        icon: Icons.vpn_key, hint: "Parola", controller: _passwordController, isPasswordType: true),
+                  ),
+                  Padding(
+                    padding: ProjectPadding.normalAllPadding,
+                    child: Container(
+                      margin: ProjectMargin.normalAllMargin,
+                      alignment: Alignment.centerRight,
+                      child: const Text(
+                        "Parolanızı mı unuttunuz?",
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: ProjectPadding.normalAllPadding,
+                      child: LoginButton(
+                        onCompleted: () async {
+                          if (_passwordController.text != null && _emailController.text != null) {
+                            authService.signIn(_emailController.text, _passwordController.text).then((value) {
+                              return Navigator.push(
+                                  context, MaterialPageRoute(builder: (context) => const AdminMapView()));
+                            });
+                          }
+                        },
+                        title: "Giriş Yap",
+                      )),
+                  const _SizedBox(),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SplashView()));
+                    },
+                    child: RichText(
+                      text: TextSpan(children: [
+                        const TextSpan(text: "Hesabınız yok mu? ", style: TextStyle(color: Colors.black)),
+                        TextSpan(text: "Kayıt Ol", style: TextStyle(color: dataTurquosieColors)),
+                      ]),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ));
@@ -128,9 +127,10 @@ class _SizedBox extends StatelessWidget {
   }
 }
 
-class ProjectPadding{
-  static EdgeInsets normalAllPadding=const EdgeInsets.all(10.0);
+class ProjectPadding {
+  static EdgeInsets normalAllPadding = const EdgeInsets.all(10.0);
 }
-class ProjectMargin{
-  static EdgeInsets normalAllMargin=const EdgeInsets.all(10.0);
+
+class ProjectMargin {
+  static EdgeInsets normalAllMargin = const EdgeInsets.all(10.0);
 }

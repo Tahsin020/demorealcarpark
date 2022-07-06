@@ -17,15 +17,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Demo Car Park',
-      theme: ThemeData.light().copyWith(
+      title: 'Park',
+      theme: ThemeData().copyWith(
         textTheme: const TextTheme(
-          headline5: TextStyle(color: Colors.black87),
-          headline6: TextStyle(color: Colors.black87),
+          headline5: TextStyle(color: Colors.black),
+          headline6: TextStyle(color: Colors.black),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(onPrimary: dataColors, primary: const Color.fromARGB(255, 82, 161, 13))),
-        progressIndicatorTheme: const ProgressIndicatorThemeData(color: Colors.white),
+        progressIndicatorTheme: const ProgressIndicatorThemeData(color: Colors.black),
         appBarTheme: const AppBarTheme(
             backgroundColor: Colors.transparent,
             centerTitle: true,
